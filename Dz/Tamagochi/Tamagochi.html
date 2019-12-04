@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      class Tamagochi {
+        constructor(
+          name,
+          health,
+          happiness,
+          purity,
+          hungry,
+          thirst,
+          intellect
+        ) {
+          this.name = name;
+          this.health = health;
+          this.happiness = happiness;
+          this.purity = purity;
+          this.hungry = hungry;
+          this.thirst = thirst;
+          this.intellect = intellect;
+        }
+
+        nakormit() {
+          tamagochi.hungry += 20;
+          tamagochi.purity -= 10;
+          state();
+        }
+
+        poigrat() {
+          tamagochi.happiness += 10;
+          state();
+        }
+
+        heal() {
+          tamagochi.health += 10;
+          state();
+        }
+
+        sleep() {
+          tamagochi.health += 10;
+          tamagochi.happiness += 10;
+          tamagochi.hungry -= 10;
+          tamagochi.thirst -= 10;
+          state();
+        }
+
+        drink() {
+          tamagochi.thirst += 10;
+          state();
+        }
+        wash() {
+          tamagochi.purity += 10;
+          state();
+        }
+
+        voskresit() {
+          tamagochi.health = 100;
+          tamagochi.happiness = 100;
+          tamagochi.purity = 100;
+          tamagochi.hungry = 100;
+          tamagochi.thirst = 100;
+          tamagochi.intellect = 100;
+          var tlive = setInterval(live, 4000);
+          state();
+        }
+
+        kill() {
+          tamagochi.health = 0;
+
+          state();
+        }
+
+        watchTV() {
+          tamagochi.happiness += 10;
+          tamagochi.intellect -= 10;
+          state();
+        }
+
+        read() {
+          tamagochi.intellect += 10;
+          state();
+        }
+      }
+      var tlive = setInterval(live, 4000);
+      function live() {
+        if (tamagochi.health <= 0) {
+          alert(tamagochi.name + " YOU DIED");
+          if (confirm("Возродити")) tamagochi.voskresit();
+          else clearInterval(tlive);
+        }
+        if (
+          tamagochi.health <= 50 ||
+          tamagochi.thirst <= 40 ||
+          tamagochi.poigrat <= 30
+        )
+          tamagochi.happiness -= 5;
+        if (tamagochi.hungry <= 20) tamagochi.health -= 5;
+        if (tamagochi.hungry == 0) tamagochi.health -= 10;
+        tamagochi.hungry -= 5;
+        tamagochi.purity -= 5;
+        tamagochi.intellect -= 1;
+        tamagochi.thirst -= 5;
+
+        if (tamagochi.hungry <= 0) tamagochi.hungry = 0;
+        if (tamagochi.purity <= 0) tamagochi.purity = 0;
+        if (tamagochi.intellect <= 0) tamagochi.intellect = 0;
+        if (tamagochi.thirst <= 0) tamagochi.thirst = 0;
+        if (tamagochi.health <= 0) tamagochi.health = 0;
+        if (tamagochi.health <= 0) tamagochi.happiness = 0;
+
+        if (tamagochi.hungry >= 100) tamagochi.hungry = 100;
+        if (tamagochi.purity >= 100) tamagochi.purity = 100;
+        if (tamagochi.intellect >= 100) tamagochi.intellect = 100;
+        if (tamagochi.thirst >= 100) tamagochi.thirst = 100;
+        if (tamagochi.health >= 100) tamagochi.health = 100;
+        if (tamagochi.health >= 100) tamagochi.happiness = 100;
+        state();
+      }
+
+      function setname() {
+        var text = document.getElementsByTagName("input")[0];
+        tamagochi.name = text.value;
+        alert("Ім'я:" + tamagochi.name);
+        state();
+      }
+
+      let tamagochi = new Tamagochi("Vladik", 50, 50, 50, 50, 50, 50);
+
+      function state() {
+        document.getElementById("name").innerHTML = tamagochi.name;
+        document.getElementById("health").innerHTML = tamagochi.health;
+        document.getElementById("happiness").innerHTML = tamagochi.happiness;
+        document.getElementById("purity").innerHTML = tamagochi.purity;
+        document.getElementById("hungry").innerHTML = tamagochi.hungry;
+        document.getElementById("thirst").innerHTML = tamagochi.thirst;
+        document.getElementById("intellect").innerHTML = tamagochi.intellect;
+      }
+    </script>
+
+    <input type="text" size="20" />
+    <button type="button" value="input" onclick="setname()">Назвати</button>
+    <br />
+    <button type="button" onclick="tamagochi.voskresit()">Воскресити</button>
+    <button type="button" onclick="tamagochi.nakormit()">Годувати</button>
+    <button type="button" onclick="tamagochi.drink()">Попити</button>
+    <button type="button" onclick="tamagochi.heal()">Полікувати</button>
+    <br />
+    <button type="button" onclick="tamagochi.poigrat()">Пограти</button>
+    <button type="button" onclick="tamagochi.wash()">Помити</button>
+    <button type="button" onclick="tamagochi.read()">Почитати</button>
+    <button type="button" onclick="tamagochi.sleep()">Поспати</button>
+    <button type="button" onclick="tamagochi.watchTV()">Подивитися TV</button>
+
+    <br />
+    Ім'я
+    <div id="name"></div>
+    Здоровьє
+    <div id="health"></div>
+    Радість
+    <div id="happiness"></div>
+    Чистота
+    <div id="purity"></div>
+    Голод
+    <div id="hungry"></div>
+    Жажда
+    <div id="thirst"></div>
+    Інтелект
+    <div id="intellect"></div>
+
+    <button type="button" onclick="tamagochi.kill()">Вбити</button>
+  </body>
+</html>
